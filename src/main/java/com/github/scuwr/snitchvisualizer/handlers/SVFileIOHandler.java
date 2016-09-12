@@ -19,7 +19,7 @@ import com.github.scuwr.snitchvisualizer.classobjects.Block;
 import com.github.scuwr.snitchvisualizer.classobjects.Snitch;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.StatCollector;
+import net.minecraft.client.resources.I18n;
 
 /**
  * File I/O Handler for Snitch Visualizer
@@ -32,7 +32,6 @@ public class SVFileIOHandler {
 	private static String folderDir = "/mods/Snitch-Visualizer";
 	private static String folderReport = "/Reports";
 
-	public static File oldSnitchList = new File(Minecraft.getMinecraft().mcDataDir.toString() + "/SnitchList.txt");
 	public static File snitchList = new File(Minecraft.getMinecraft().mcDataDir.toString() + folderDir
 			+ "/SnitchList.csv");
 	public static File worldList = new File(Minecraft.getMinecraft().mcDataDir.toString() + folderDir
@@ -60,6 +59,7 @@ public class SVFileIOHandler {
 		return true;
 	}
 	
+	/*
 	public static void saveWorlds() {
 		isDone = false;
 		try{
@@ -79,6 +79,7 @@ public class SVFileIOHandler {
 		}
 		isDone = true;
 	}
+	*/
 	
 	public static void saveList() {
 		isDone = false;
@@ -88,7 +89,7 @@ public class SVFileIOHandler {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(snitchList));
 			logger.info("Saving Snitch list.. " + SV.instance.snitchList.size() + " snitches to save.");
 			for (Snitch n : SV.instance.snitchList) {
-				bw.write(n.getWorld() + "," + n.getX() + "," + n.getY() + "," + n.getZ() + "," + 
+				bw.write(n.getWorldName() + "," + n.getWorldUUID() + "," + n.getX() + "," + n.getY() + "," + n.getZ() + "," + 
 							((n.getRawCullTime() != null) ? n.getRawCullTime().getTime() : " ") + "," +
 							n.getCtGroup() + "," + n.getName() + ",\r\n");
 			}
@@ -120,6 +121,7 @@ public class SVFileIOHandler {
 		isDone = true;
 	}
 
+	/*
 	public static void loadWorlds() {
 		isDone = false;
 		try{
@@ -153,6 +155,7 @@ public class SVFileIOHandler {
 		}
 		isDone = true;
 	}
+	*/
 	
 	public static void loadList() {
 		isDone = false;
@@ -163,33 +166,23 @@ public class SVFileIOHandler {
 
 			BufferedReader br = null;
 
-			if (oldSnitchList.exists()) {
-				br = new BufferedReader(new FileReader(oldSnitchList));
-			} else {
-				br = new BufferedReader(new FileReader(snitchList));
-			}
+			
+			br = new BufferedReader(new FileReader(snitchList));
+
 			String line = br.readLine();
 			while (line != null) {
 				String tokens[] = line.split(",|;");
-				if (tokens.length > 6) { // new
-					double cullTime = (!tokens[4].trim().equals("")) ? hoursToDate(Long.parseLong(tokens[4])) : -1;
-					SV.instance.snitchList.add(new Snitch(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),
-							Integer.parseInt(tokens[3]), cullTime, tokens[5], tokens[6]));
-				} else if (tokens.length > 5) { //old
-					double cullTime = (!tokens[3].trim().equals("")) ? hoursToDate(Long.parseLong(tokens[3])) : -1;
-					SV.instance.snitchList.add(new Snitch(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]),
-							Integer.parseInt(tokens[2]), cullTime, tokens[4], tokens[5]));
-				} else {
+				if (tokens.length > 7) { // new
+					double cullTime = (!tokens[5].trim().equals("")) ? hoursToDate(Long.parseLong(tokens[5])) : -1;
+					SV.instance.snitchList.add(new Snitch(tokens[0], tokens[1], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]),
+							Integer.parseInt(tokens[4]), cullTime, tokens[6], tokens[7]));
+				}
+				else {
 					logger.info("Snitch line failed to import: " + line);
 				}
 				line = br.readLine();
 			}
 			br.close();
-
-			if (oldSnitchList.exists()) {
-				oldSnitchList.delete();
-				saveList();
-			}
 		} catch (IOException e) {
 			logger.error("Failed to load SnitchList.csv!", e);
 		} catch (NullPointerException e) {
@@ -216,19 +209,19 @@ public class SVFileIOHandler {
 				String tokens[] = line.split(": |;");
 				if (tokens.length > 1) {
 
-					if (tokens[0].contains(StatCollector.translateToLocal(SVSettings.Options.UPDATE_DETECTION
+					if (tokens[0].contains(I18n.format(SVSettings.Options.UPDATE_DETECTION
 							.getEnumString()))) {
-						if (tokens[1].contains(StatCollector.translateToLocal("options.on")))
+						if (tokens[1].contains(I18n.format("options.on")))
 							SV.settings.setOptionValue(SVSettings.Options.UPDATE_DETECTION, true);
 						else
 							SV.settings.setOptionValue(SVSettings.Options.UPDATE_DETECTION, false);
-					} else if (tokens[0].contains(StatCollector.translateToLocal(SVSettings.Options.RENDER_ENABLED
+					} else if (tokens[0].contains(I18n.format(SVSettings.Options.RENDER_ENABLED
 							.getEnumString()))) {
-						if (tokens[1].contains(StatCollector.translateToLocal("options.on")))
+						if (tokens[1].contains(I18n.format("options.on")))
 							SV.settings.setOptionValue(SVSettings.Options.RENDER_ENABLED, true);
 						else
 							SV.settings.setOptionValue(SVSettings.Options.RENDER_ENABLED, false);
-					} else if (tokens[0].contains(StatCollector.translateToLocal(SVSettings.Options.RENDER_DISTANCE
+					} else if (tokens[0].contains(I18n.format(SVSettings.Options.RENDER_DISTANCE
 							.getEnumString()))) {
 						String token[] = tokens[1].split(" ");
 

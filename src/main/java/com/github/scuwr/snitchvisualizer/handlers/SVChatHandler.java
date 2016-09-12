@@ -3,20 +3,22 @@ package com.github.scuwr.snitchvisualizer.handlers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import com.github.scuwr.snitchvisualizer.SV;
 import com.github.scuwr.snitchvisualizer.classobjects.Block;
 import com.github.scuwr.snitchvisualizer.classobjects.Snitch;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import wafflestomper.wafflecore.WaffleCore;
 
 /**
  * Chat handler for Snitch Visualizer
@@ -38,8 +40,8 @@ public class SVChatHandler {
 
 	@SubscribeEvent
 	public void onChat(ClientChatReceivedEvent event) {
-		if (event != null && event.message != null) {
-			String msg = event.message.getUnformattedText();
+		if (event != null && event.getMessage() != null) {
+			String msg = event.getMessage().getUnformattedText();
 			if (msg == null) {
 				return;
 			}
@@ -82,7 +84,7 @@ public class SVChatHandler {
 					logger.error("Exception encountered while parsing snitch logs", e);
 					
 					try {
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check logs; " +
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 								"non-fatal error while parsing snitch logs"));
 					} catch (Exception f) {
 						logger.error("Couldn't notify player of error", f);
@@ -111,7 +113,7 @@ public class SVChatHandler {
 		} catch (Exception e) {
 			logger.error("Exception encountered while updating snitch list", e);
 			try {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check logs; " +
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 						"non-fatal error while updating snitch list"));
 			} catch (Exception f) {
 				logger.error("Couldn't notify player of error", f);
@@ -146,7 +148,7 @@ public class SVChatHandler {
 			} catch (Exception e) {
 				logger.error("Exception encountered while parsing TPS", e);
 				try {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check logs; " +
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 							"non-fatal error while parsing TPS"));
 				} catch (Exception f) {
 					logger.error("Couldn't notify player of error", f);
@@ -158,12 +160,12 @@ public class SVChatHandler {
 		}
 
 		try {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Timeout between commands is "
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Timeout between commands is "
 					+ Double.toString(SVTickHandler.waitTime) + " seconds."));
 		} catch (Exception e) {
 			logger.error("Exception encountered while alerting user of TPS update speed", e);
 			try {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check logs; " +
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 						"non-fatal error while alerting user of TPS update speed"));
 			} catch (Exception f) {
 				logger.error("Couldn't notify player of error", f);
@@ -180,7 +182,9 @@ public class SVChatHandler {
 		}
 		logger.info("Parsing string | " + msg);
 		try {
-			String world = match.group(1);
+			String worldName = match.group(1);
+			String worldUUID = WaffleCore.INSTANCE.worldInfo.getWorldName();
+			
 			int x = Integer.parseInt(match.group(2));
 			int y = Integer.parseInt(match.group(3));
 			int z = Integer.parseInt(match.group(4));
@@ -190,7 +194,7 @@ public class SVChatHandler {
 			}
 			String ctGroup = match.group(6);
 
-			Snitch n = new Snitch(world, x, y, z, cullTime, ctGroup, null);
+			Snitch n = new Snitch(worldName, worldUUID, x, y, z, cullTime, ctGroup, null);
 
 			// TODO: just use a sorted collection, this is gross.
 			int index = Collections.binarySearch(SV.instance.snitchList, n);
@@ -198,6 +202,7 @@ public class SVChatHandler {
 				SV.instance.snitchList.add(n);
 				Collections.sort(SV.instance.snitchList);
 				SVFileIOHandler.saveList();
+				
 			} else {
 				SV.instance.snitchList.get(index).setCtGroup(ctGroup);
 				SV.instance.snitchList.get(index).setCullTime(cullTime);
@@ -251,7 +256,7 @@ public class SVChatHandler {
 			} catch (Exception e) {
 				logger.error("Exception encountered while parsing snitch report", e);
 				try {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check logs; " +
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 							"non-fatal error while parsing snitch report"));
 				} catch (Exception f) {
 					logger.error("Couldn't notify player of error", f);
@@ -272,7 +277,7 @@ public class SVChatHandler {
 			} catch (Exception e) {
 				logger.error("Exception encountered while parsing snitch entry", e);
 				try {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check logs; " +
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 							"non-fatal error while parsing snitch entry"));
 				} catch (Exception f) {
 					logger.error("Couldn't notify player of error", f);
@@ -290,7 +295,7 @@ public class SVChatHandler {
 		} catch (Exception e) {
 			logger.error("Exception encountered while parsing snitch name", e);
 			try {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check logs; " +
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 						"non-fatal error while parsing snitch name"));
 			} catch (Exception f) {
 				logger.error("Couldn't notify player of error", f);

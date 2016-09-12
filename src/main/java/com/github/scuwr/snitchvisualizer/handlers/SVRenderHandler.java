@@ -2,10 +2,12 @@ package com.github.scuwr.snitchvisualizer.handlers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import wafflestomper.wafflecore.WaffleCore;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +35,7 @@ public class SVRenderHandler {
 	public void eventRenderWorld(RenderWorldLastEvent event) {
 		if (SVFileIOHandler.isDone && SV.settings.renderEnabled) {
 			try {
-				float partialTickTime = event.partialTicks;
+				float partialTickTime = event.getPartialTicks();
 
 				double renderPosX = (float) (mc.thePlayer.lastTickPosX + (mc.thePlayer.posX - mc.thePlayer.lastTickPosX)
 						* partialTickTime);
@@ -43,7 +45,8 @@ public class SVRenderHandler {
 						* partialTickTime);
 
 				for (Snitch n : SV.instance.snitchList) {
-					if (n.getDistance() < SV.settings.renderDistance * 16) {
+					if (n.getDistance() < SV.settings.renderDistance * 16 && 
+							n.getWorldUUID().equals(WaffleCore.INSTANCE.worldInfo.getWorldName())) {
 						GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 						GL11.glLineWidth(5.0F);
 						GL11.glDisable(GL11.GL_LIGHTING);
@@ -58,7 +61,7 @@ public class SVRenderHandler {
 						double px = -(renderPosX - n.getX());
 						double py = -(renderPosY - n.getY());
 						double pz = -(renderPosZ - n.getZ());
-						AxisAlignedBB bb = AxisAlignedBB.fromBounds(px - 10.99, py - 11.99, pz - 10.99, px + 11.99,
+						AxisAlignedBB bb = new AxisAlignedBB(px - 10.99, py - 11.99, pz - 10.99, px + 11.99,
 								py + 10.99, pz + 11.99);
 
 						int color = getColor(n.hoursToDate());
@@ -117,7 +120,7 @@ public class SVRenderHandler {
 						px = -(renderPosX - n.getX());
 						py = -(renderPosY - n.getY());
 						pz = -(renderPosZ - n.getZ());
-						bb = AxisAlignedBB.fromBounds(px - 0.01, py - 0.01, pz - 0.01, px + 0.99, py + 0.99, pz + 0.99);
+						bb = new AxisAlignedBB(px - 0.01, py - 0.01, pz - 0.01, px + 0.99, py + 0.99, pz + 0.99);
 
 						switch (color) {
 						case 0:
@@ -177,7 +180,7 @@ public class SVRenderHandler {
 						double px = -(renderPosX - b.getX());
 						double py = -(renderPosY - b.getY());
 						double pz = -(renderPosZ - b.getZ());
-						AxisAlignedBB bb = AxisAlignedBB.fromBounds(px - 0.01, py - 0.01, pz - 0.01, px + 0.99,
+						AxisAlignedBB bb = new AxisAlignedBB(px - 0.01, py - 0.01, pz - 0.01, px + 0.99,
 								py + 0.99, pz + 0.99);
 
 						switch (b.getType()) {
@@ -223,104 +226,104 @@ public class SVRenderHandler {
 			}
 		}
 	}
-
-	private void drawBoundingBoxQuads(AxisAlignedBB bb) {
+	
+	private static void drawBoundingBoxQuads(AxisAlignedBB bb) {
 		Tessellator tess = Tessellator.getInstance();
-		WorldRenderer wr = tess.getWorldRenderer();
-		wr.startDrawingQuads();
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
+		VertexBuffer vb = tess.getBuffer();
+		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
 		tess.draw();
-		wr.startDrawingQuads();
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
+		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
 		tess.draw();
-		wr.startDrawingQuads();
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
+		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
 		tess.draw();
-		wr.startDrawingQuads();
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
+		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
 		tess.draw();
-		wr.startDrawingQuads();
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
+		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
 		tess.draw();
-		wr.startDrawingQuads();
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
+		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
 		tess.draw();
 	}
 
-	public static void drawCrossedOutlinedBoundingBox(AxisAlignedBB bb) {
+	private static void drawCrossedOutlinedBoundingBox(AxisAlignedBB bb) {
 		Tessellator tess = Tessellator.getInstance();
-		WorldRenderer wr = tess.getWorldRenderer();
-		wr.startDrawing(GL11.GL_LINE_STRIP);
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
+		VertexBuffer vb = tess.getBuffer();
+		vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
 		tess.draw();
-		wr.startDrawing(GL11.GL_LINE_STRIP);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
+		vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
 		tess.draw();
-		wr.startDrawing(GL11.GL_LINE_STRIP);
-		wr.addVertex(bb.maxX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.maxZ);
+		vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.maxZ).endVertex();
 		tess.draw();
-		wr.startDrawing(GL11.GL_LINE_STRIP);
-		wr.addVertex(bb.maxX, bb.minY, bb.minZ);
-		wr.addVertex(bb.maxX, bb.maxY, bb.minZ);
+		vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		vb.pos(bb.maxX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.maxX, bb.maxY, bb.minZ).endVertex();
 		tess.draw();
-		wr.startDrawing(GL11.GL_LINE_STRIP);
-		wr.addVertex(bb.minX, bb.minY, bb.maxZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.maxZ);
+		vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		vb.pos(bb.minX, bb.minY, bb.maxZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.maxZ).endVertex();
 		tess.draw();
-		wr.startDrawing(GL11.GL_LINE_STRIP);
-		wr.addVertex(bb.minX, bb.minY, bb.minZ);
-		wr.addVertex(bb.minX, bb.maxY, bb.minZ);
+		vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		vb.pos(bb.minX, bb.minY, bb.minZ).endVertex();
+		vb.pos(bb.minX, bb.maxY, bb.minZ).endVertex();
 		tess.draw();
 	}
 

@@ -2,8 +2,8 @@ package com.github.scuwr.snitchvisualizer;
 
 import org.lwjgl.input.Keyboard;
 
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.resources.I18n;
 
 /**
  * The configuration settings for this SnitchVisualizer
@@ -31,7 +31,7 @@ public class SVSettings {
 
 	public static String getKeyDisplayString(int i) {
 		if (i < 0) {
-			return StatCollector.translateToLocalFormatted("key.mouseButton",
+			return I18n.format("key.mouseButton",
 					new Object[] { Integer.valueOf(i + 101) });
 		} else {
 			return Keyboard.getKeyName(i);
@@ -89,7 +89,7 @@ public class SVSettings {
 
 	public String getKeyBinding(Options option) {
 		String s = (new StringBuilder())
-				.append(StatCollector.translateToLocal(option.getEnumString()))
+				.append(I18n.format(option.getEnumString()))
 				.append(": ").toString();
 
 		if (option.getEnumFloat()) {
@@ -99,13 +99,13 @@ public class SVSettings {
 			if (option == Options.RENDER_DISTANCE) {
 				if (f == option.getValueMin()) {
 					return (new StringBuilder()).append(s)
-							.append(StatCollector.translateToLocal("MIN"))
+							.append(I18n.format("MIN"))
 							.toString();
 				}
 
 				if (f == option.getValueMax()) {
 					return (new StringBuilder()).append(s)
-							.append(StatCollector.translateToLocal("MAX"))
+							.append(I18n.format("MAX"))
 							.toString();
 				} else {
 					return (new StringBuilder()).append(s).append((int) (f))
@@ -115,26 +115,22 @@ public class SVSettings {
 				if (b == true) {
 					return (new StringBuilder())
 							.append(s)
-							.append(StatCollector
-									.translateToLocal("options.on")).toString();
+							.append(I18n.format("options.on")).toString();
 				} else {
 					return (new StringBuilder())
 							.append(s)
-							.append(StatCollector
-									.translateToLocal("options.off"))
+							.append(I18n.format("options.off"))
 							.toString();
 				}
 			} else if (option == Options.UPDATE_DETECTION) {
 				if (b == true) {
 					return (new StringBuilder())
 							.append(s)
-							.append(StatCollector
-									.translateToLocal("options.on")).toString();
+							.append(I18n.format("options.on")).toString();
 				} else {
 					return (new StringBuilder())
 							.append(s)
-							.append(StatCollector
-									.translateToLocal("options.off"))
+							.append(I18n.format("options.off"))
 							.toString();
 				}
 			} else if (option == Options.SETTINGS_KEYBINDING) {
@@ -144,7 +140,7 @@ public class SVSettings {
 
 			if (f == 0.0F) {
 				return (new StringBuilder()).append(s)
-						.append(StatCollector.translateToLocal("options.off"))
+						.append(I18n.format("options.off"))
 						.toString();
 			} else {
 				return (new StringBuilder()).append(s).append((int) (f))
@@ -155,7 +151,6 @@ public class SVSettings {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private float parseFloat(String s) {
 		if (s.equals("true")) {
 			return 1.0F;

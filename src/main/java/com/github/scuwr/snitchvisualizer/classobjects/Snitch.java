@@ -12,7 +12,8 @@ import net.minecraft.client.entity.EntityPlayerSP;
  *
  */
 public class Snitch implements Comparable<Snitch> {
-	private String world;
+	private String worldName;
+	private String worldUUID;
 	private int x;
 	private int y;
 	private int z;
@@ -45,14 +46,16 @@ public class Snitch implements Comparable<Snitch> {
 	 */
 	public Snitch(int x, int y, int z, double cullTime, String ctGroup,
 			String name) {
-		this("world", x, y, z, cullTime, ctGroup, name);
+		this("world", "no_uuid", x, y, z, cullTime, ctGroup, name);
 	}
 
 	/**
 	 * Initializes Snitch object
 	 * 
-	 * @param world
-	 *            world of Snitch object (name)
+	 * @param worldName
+	 *            human-readable world name of Snitch object
+	 * @param worldUUID
+	 *            unique world identifier of Snitch object
 	 * @param x
 	 *            location of Snitch object on x axis
 	 * @param y
@@ -66,9 +69,10 @@ public class Snitch implements Comparable<Snitch> {
 	 * @param name
 	 *            Snitch object now have names!
 	 */
-	public Snitch(String world, int x, int y, int z, double cullTime, 
+	public Snitch(String worldName, String worldUUID, int x, int y, int z, double cullTime, 
 			String ctGroup, String name) {
-		this.world = world;
+		this.worldName = worldName;
+		this.worldUUID = worldUUID;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -110,8 +114,11 @@ public class Snitch implements Comparable<Snitch> {
 	 */
 	@Override
 	public int compareTo(Snitch n) {
-		if (this.world.compareTo(n.world) != 0) {
-			return this.world.compareTo(n.world);
+		if (this.worldName.compareTo(n.worldName) != 0) {
+			return this.worldName.compareTo(n.worldName);
+		} 
+		if (this.worldUUID.compareTo(n.worldUUID) != 0) {
+			return this.worldUUID.compareTo(n.worldUUID);
 		} 
 		if (this.x > n.x) {
 			return 1;
@@ -131,9 +138,9 @@ public class Snitch implements Comparable<Snitch> {
 		return 0;
 	}
 	
-	public boolean contains(String world, int x, int y, int z) {
-		return world.equals(getWorld()) && x >= getFieldMinX() && x <= getFieldMaxX() && z >= getFieldMinZ() && z <= getFieldMaxZ() && 
-				y >= getFieldMinY() && y <= getFieldMaxY();
+	public boolean contains(String worldUUID, int x, int y, int z) {
+		return worldUUID.equals(getWorldUUID()) && x >= getFieldMinX() && x <= getFieldMaxX() && 
+				z >= getFieldMinZ() && z <= getFieldMaxZ() && y >= getFieldMinY() && y <= getFieldMaxY();
 	}
 
 	/**
@@ -172,12 +179,20 @@ public class Snitch implements Comparable<Snitch> {
 		return (this.cullTime.getTime() - oldDate.getTime()) / HOURS_IN_MILLIS;
 	}
 
-	public final String getWorld() {
-		return world;
+	public final String getWorldUUID() {
+		return worldUUID;
+	}
+	
+	public final String getWorldName() {
+		return worldName;
 	}
 
-	public final void setWorld(String world) {
-		this.world = world;
+	public final void setWorldUUID(String worldUUID) {
+		this.worldUUID = worldUUID;
+	}
+	
+	public final void setWorldName(String worldName) {
+		this.worldName = worldName;
 	}
 
 	public final int getX() {

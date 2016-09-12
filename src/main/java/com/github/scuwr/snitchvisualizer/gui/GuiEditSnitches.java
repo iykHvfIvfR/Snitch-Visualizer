@@ -3,20 +3,17 @@ package com.github.scuwr.snitchvisualizer.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.logging.log4j.LogManager;
-
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import com.github.scuwr.snitchvisualizer.SV;
 import com.github.scuwr.snitchvisualizer.classobjects.Block;
 import com.github.scuwr.snitchvisualizer.classobjects.Snitch;
 import com.github.scuwr.snitchvisualizer.handlers.SVFileIOHandler;
+
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Defines the on-screen gui for editing the snitch list
@@ -56,10 +53,10 @@ public class GuiEditSnitches extends GuiScreen {
 		this.guiSnitchList = new GuiSnitchList(this, this.mc);
 
 		this.buttonList.clear();
-		this.buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height - 4 + b0, 98, 18, StatCollector
-				.translateToLocal("gui.done")));
-		this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height - 4 + b0, 98, 18, StatCollector
-				.translateToLocal("svoptions.resetSnitchList")));
+		this.buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height - 4 + b0, 98, 18, I18n
+				.format("gui.done")));
+		this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height - 4 + b0, 98, 18, I18n
+				.format("svoptions.resetSnitchList")));
 		
 		this.guiSnitchList.registerScrollButtons(4, 5);
 	}
@@ -73,7 +70,7 @@ public class GuiEditSnitches extends GuiScreen {
 			removeSnitches();
 			SVFileIOHandler.saveSettings();
 			SVFileIOHandler.saveList();
-			SVFileIOHandler.saveWorlds();
+			//SVFileIOHandler.saveWorlds();
 			break;
 		case 5:
 			SV.instance.blockList = new ArrayList<Block>();

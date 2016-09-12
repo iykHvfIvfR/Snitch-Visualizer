@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.StatCollector;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -50,15 +50,15 @@ public class SVGui extends GuiScreen {
 	public void initGui() {
 		byte b0 = -16;
 		this.buttonList.clear();
-		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 24 + b0, StatCollector
-				.translateToLocal("svoptions.listUpdate")));
+		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 24 + b0, I18n
+				.format("svoptions.listUpdate")));
 		if(SVChatHandler.snitchReport){
-			this.buttonList.add(new GuiButton(6, this.width / 2 - 100, this.height / 4 + 48 + b0, StatCollector
-					.translateToLocal("svoptions.snitchReportCancel")));
+			this.buttonList.add(new GuiButton(6, this.width / 2 - 100, this.height / 4 + 48 + b0, I18n
+					.format("svoptions.snitchReportCancel")));
 		}
 		else{
-		this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + b0, StatCollector
-				.translateToLocal("svoptions.snitchReport")));
+		this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + b0, I18n
+				.format("svoptions.snitchReport")));
 		}
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72 + b0, 98, 18, SV.settings
 				.getKeyBinding(SVSettings.Options.UPDATE_DETECTION)));
@@ -66,10 +66,10 @@ public class SVGui extends GuiScreen {
 				.getKeyBinding(SVSettings.Options.RENDER_ENABLED)));
 		this.buttonList
 				.add(new SVGuiOptionSlider(100, this.width / 2 - 100, this.height / 4 + 96 + b0, renderDistance));
-		this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 120 + b0, StatCollector
-				.translateToLocal("svoptions.editList")));
-		this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 120 + 24 + b0, StatCollector
-				.translateToLocal("gui.done")));
+		this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 120 + b0, I18n
+				.format("svoptions.editList")));
+		this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 120 + 24 + b0, I18n
+				.format("gui.done")));
 	}
 
 	public void actionPerformed(GuiButton button) {

@@ -5,7 +5,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -13,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 
 import com.github.scuwr.snitchvisualizer.SV;
 import com.github.scuwr.snitchvisualizer.classobjects.Snitch;
+import com.mojang.realmsclient.gui.ChatFormatting;
 
 @SideOnly(Side.CLIENT)
 public class GuiSnitchList extends GuiListExtended {
@@ -27,7 +27,7 @@ public class GuiSnitchList extends GuiListExtended {
 	private int nameWidth = 0;
 	private int nameSpace = 0;
 	//private static final String __OBFID = "CL_00000732";
-	private final String worldHeader = "World";
+	private final String worldHeader = "Shard";
 	private final String xHeader = "X";
 	private final String yHeader = "Y";
 	private final String zHeader = "Z";
@@ -70,7 +70,7 @@ public class GuiSnitchList extends GuiListExtended {
 				this.nameWidth = l;
 			}
 			
-			l = mc.fontRendererObj.getStringWidth(snitch.getWorld() + "  ");
+			l = mc.fontRendererObj.getStringWidth(snitch.getWorldName() + "  ");
 			if (l > this.worldWidth) {
 				this.worldWidth = l;
 			}
@@ -95,7 +95,7 @@ public class GuiSnitchList extends GuiListExtended {
 
     protected void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_)
     {
-        String root = EnumChatFormatting.UNDERLINE + "" + EnumChatFormatting.BOLD;
+        String root = ChatFormatting.UNDERLINE + "" + ChatFormatting.BOLD;
         
 		int xPosition = p_148129_1_;
 		int yFinal = p_148129_2_ + GuiSnitchList.this.mc.fontRendererObj.FONT_HEIGHT - 1;
@@ -192,8 +192,8 @@ public class GuiSnitchList extends GuiListExtended {
 			}*/
 			this.ctGroup = snitch.getCtGroup();
 			
-			this.worldWidth = mc.fontRendererObj.getStringWidth(snitch.getWorld());
-			this.world = snitch.getWorld();
+			this.worldWidth = mc.fontRendererObj.getStringWidth(snitch.getWorldName());
+			this.world = snitch.getWorldName();
 		}
 
 		public void drawEntry(int p_148279_1_, int xPosition, int yPosition, int p_148279_4_, int p_148279_5_,

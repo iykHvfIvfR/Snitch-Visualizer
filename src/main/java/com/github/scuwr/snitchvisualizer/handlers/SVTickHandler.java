@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  * the tick value very high to prevent the player from being kicked due to
  * spamming.
  * 
- * In other words, the game is laggy and thinks you're spamming if it sends out
+ * In other words, the game is laggy and thinks you're spamming if it sends outw
  * too many messages in a given amount of time, but if data is available delay
  * is adjusted to match current conditions.
  * 
@@ -42,11 +42,13 @@ public class SVTickHandler {
 			
 			if (((new Date()).getTime() - (waitTime * 1000)) > start.getTime()) {
 				if (SVChatHandler.updateSnitchList) {
+					logger.warn(">>>>>>>>>  Sending jalist " + String.valueOf(SVChatHandler.jalistIndex));
 					Minecraft.getMinecraft().thePlayer.sendChatMessage("/jalist " + SVChatHandler.jalistIndex);
 					SVChatHandler.jalistIndex++;
 					start = new Date();
 				}
 				if (SVPlayerHandler.updateSnitchName || SVChatHandler.snitchReport) {
+					logger.warn(">>>>>>>>>  Sending jainfo " + String.valueOf(SVChatHandler.jainfoIndex));
 					Minecraft.getMinecraft().thePlayer.sendChatMessage("/jainfo " + SVChatHandler.jainfoIndex);
 					if (SVChatHandler.snitchReport) {
 						SVChatHandler.jainfoIndex++;
