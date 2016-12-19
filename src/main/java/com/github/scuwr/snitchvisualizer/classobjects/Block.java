@@ -5,7 +5,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 
 /**
  * Lightweight representation of a block manipulation as reported by a snitch.
- * 
+ *
  * @author Scuwr
  *
  */
@@ -23,7 +23,7 @@ public class Block {
 
 	/**
 	 * Creates a new block interaction record
-	 * 
+	 *
 	 * @param x
 	 *            X coord location of interaction
 	 * @param y
@@ -49,7 +49,7 @@ public class Block {
 
 	/**
 	 * Quick check of distance from the interaction event to the player.
-	 * 
+	 *
 	 * @return the distance (Cartesian) of the block interaction from the
 	 *         player.
 	 */

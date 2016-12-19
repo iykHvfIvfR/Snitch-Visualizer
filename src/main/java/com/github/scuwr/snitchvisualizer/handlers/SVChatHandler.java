@@ -22,7 +22,7 @@ import wafflestomper.wafflecore.WaffleCore;
 
 /**
  * Chat handler for Snitch Visualizer
- * 
+ *
  * @author Scuwr
  *
  */
@@ -45,7 +45,7 @@ public class SVChatHandler {
 			if (msg == null) {
 				return;
 			}
-			
+
 			Matcher isSM = SVChatHandler.snitchMessage.matcher(msg);
 			if (isSM.matches()) {
 				parseSnitch(msg, isSM);
@@ -82,7 +82,7 @@ public class SVChatHandler {
 					}
 				} catch (Exception e) {
 					logger.error("Exception encountered while parsing snitch logs", e);
-					
+
 					try {
 						Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("Check logs; " +
 								"non-fatal error while parsing snitch logs"));
@@ -184,7 +184,7 @@ public class SVChatHandler {
 		try {
 			String worldName = match.group(1);
 			String worldUUID = WaffleCore.INSTANCE.worldInfo.getWorldName();
-			
+
 			int x = Integer.parseInt(match.group(2));
 			int y = Integer.parseInt(match.group(3));
 			int z = Integer.parseInt(match.group(4));
@@ -202,7 +202,7 @@ public class SVChatHandler {
 				SV.instance.snitchList.add(n);
 				Collections.sort(SV.instance.snitchList);
 				SVFileIOHandler.saveList();
-				
+
 			} else {
 				SV.instance.snitchList.get(index).setCtGroup(ctGroup);
 				SV.instance.snitchList.get(index).setCullTime(cullTime);
@@ -235,12 +235,12 @@ public class SVChatHandler {
 				} else if (tokens[1].equals("Destroyed")) {
 					type = Block.Action.DESTROYED;
 				}
-	
+
 				try {
 					int x = Integer.parseInt(tokens[5]);
 					int y = Integer.parseInt(tokens[6]);
 					int z = Integer.parseInt(tokens[7]);
-	
+
 					if (type != Block.Action.NOP) {
 						if (!snitchReport) {
 							SV.instance.blockList.add(new Block(x, y, z, type, tokens[1], "BlockID: " + tokens[4]));

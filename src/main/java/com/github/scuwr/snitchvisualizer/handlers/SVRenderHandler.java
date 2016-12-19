@@ -20,7 +20,7 @@ import com.github.scuwr.snitchvisualizer.classobjects.Snitch;
 
 /**
  * Render Hander for Snitch Visualizer
- * 
+ *
  * @author Scuwr
  *
  */
@@ -45,7 +45,7 @@ public class SVRenderHandler {
 						* partialTickTime);
 
 				for (Snitch n : SV.instance.snitchList) {
-					if (n.getDistance() < SV.settings.renderDistance * 16 && 
+					if (n.getDistance() < SV.settings.renderDistance * 16 &&
 							n.getWorldUUID().equals(WaffleCore.INSTANCE.worldInfo.getWorldName())) {
 						GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 						GL11.glLineWidth(5.0F);
@@ -226,7 +226,7 @@ public class SVRenderHandler {
 			}
 		}
 	}
-	
+
 	private static void drawBoundingBoxQuads(AxisAlignedBB bb) {
 		Tessellator tess = Tessellator.getInstance();
 		VertexBuffer vb = tess.getBuffer();

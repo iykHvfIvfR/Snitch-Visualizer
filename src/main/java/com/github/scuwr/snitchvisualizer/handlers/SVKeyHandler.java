@@ -16,7 +16,7 @@ import com.github.scuwr.snitchvisualizer.gui.SVGui;
 
 /**
  * Key handler for Snitch Visualizer
- * 
+ *
  * @author Scuwr
  *
  */

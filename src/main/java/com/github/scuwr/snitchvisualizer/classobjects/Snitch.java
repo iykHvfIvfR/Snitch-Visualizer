@@ -7,7 +7,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 
 /**
  * Defines the Snitch object for use by the mod
- * 
+ *
  * @author Scuwr
  *
  */
@@ -30,7 +30,7 @@ public class Snitch implements Comparable<Snitch> {
 
 	/**
 	 * Initializes Snitch object
-	 * 
+	 *
 	 * @param x
 	 *            location of Snitch object on x axis
 	 * @param y
@@ -51,7 +51,7 @@ public class Snitch implements Comparable<Snitch> {
 
 	/**
 	 * Initializes Snitch object
-	 * 
+	 *
 	 * @param worldName
 	 *            human-readable world name of Snitch object
 	 * @param worldUUID
@@ -69,7 +69,7 @@ public class Snitch implements Comparable<Snitch> {
 	 * @param name
 	 *            Snitch object now have names!
 	 */
-	public Snitch(String worldName, String worldUUID, int x, int y, int z, double cullTime, 
+	public Snitch(String worldName, String worldUUID, int x, int y, int z, double cullTime,
 			String ctGroup, String name) {
 		this.worldName = worldName;
 		this.worldUUID = worldUUID;
@@ -99,15 +99,15 @@ public class Snitch implements Comparable<Snitch> {
 	public double getCullTime() {
 		return hoursToDate();
 	}
-	
+
 	public void setRawCullTime(Date cullTime) {
 		this.cullTime = cullTime;
 	}
-	
+
 	public Date getRawCullTime() {
 		return this.cullTime;
 	}
-	
+
 
 	/**
 	 * Defines how to compare one Snitch object against another
@@ -116,10 +116,10 @@ public class Snitch implements Comparable<Snitch> {
 	public int compareTo(Snitch n) {
 		if (this.worldName.compareTo(n.worldName) != 0) {
 			return this.worldName.compareTo(n.worldName);
-		} 
+		}
 		if (this.worldUUID.compareTo(n.worldUUID) != 0) {
 			return this.worldUUID.compareTo(n.worldUUID);
-		} 
+		}
 		if (this.x > n.x) {
 			return 1;
 		} else if (n.x > this.x) {
@@ -137,15 +137,15 @@ public class Snitch implements Comparable<Snitch> {
 		}
 		return 0;
 	}
-	
+
 	public boolean contains(String worldUUID, int x, int y, int z) {
-		return worldUUID.equals(getWorldUUID()) && x >= getFieldMinX() && x <= getFieldMaxX() && 
+		return worldUUID.equals(getWorldUUID()) && x >= getFieldMinX() && x <= getFieldMaxX() &&
 				z >= getFieldMinZ() && z <= getFieldMaxZ() && y >= getFieldMinY() && y <= getFieldMaxY();
 	}
 
 	/**
 	 * Gets the distance from the player to the Snitch object
-	 * 
+	 *
 	 * @return distance from player to Snitch object
 	 */
 	public double getDistance() {
@@ -156,9 +156,9 @@ public class Snitch implements Comparable<Snitch> {
 
 	/**
 	 * Converts hours to milliseconds in the future from the current date
-	 * 
+	 *
 	 * Used to specify the cullTime of the Snitch object
-	 * 
+	 *
 	 * @param d
 	 *            time in hours
 	 * @return date in milliseconds
@@ -170,7 +170,7 @@ public class Snitch implements Comparable<Snitch> {
 
 	/**
 	 * Computes the amount of hours remaining until cullTime
-	 * 
+	 *
 	 * @return hours until Snitch cullTime
 	 */
 	public double hoursToDate() {
@@ -182,7 +182,7 @@ public class Snitch implements Comparable<Snitch> {
 	public final String getWorldUUID() {
 		return worldUUID;
 	}
-	
+
 	public final String getWorldName() {
 		return worldName;
 	}
@@ -190,7 +190,7 @@ public class Snitch implements Comparable<Snitch> {
 	public final void setWorldUUID(String worldUUID) {
 		this.worldUUID = worldUUID;
 	}
-	
+
 	public final void setWorldName(String worldName) {
 		this.worldName = worldName;
 	}

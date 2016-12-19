@@ -17,7 +17,7 @@ import com.github.scuwr.snitchvisualizer.handlers.SVFileIOHandler;
 
 /**
  * Defines the on-screen gui
- * 
+ *
  * @author Scuwr
  *
  */

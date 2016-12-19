@@ -23,7 +23,7 @@ import net.minecraft.client.resources.I18n;
 
 /**
  * File I/O Handler for Snitch Visualizer
- * 
+ *
  * @author Scuwr
  *
  */
@@ -58,19 +58,19 @@ public class SVFileIOHandler {
 		}
 		return true;
 	}
-	
+
 	/*
 	public static void saveWorlds() {
 		isDone = false;
 		try{
 			prepareFile(svDir, worldList);
-			
+
 			BufferedWriter bw = new BufferedWriter(new FileWriter(worldList));
-			
+
 			for (Map.Entry<String,String> entry : SV.instance.worldList.entrySet()) {
 				bw.write(entry.getKey() + "," + entry.getValue() + ",\r\n");
 			}
-			
+
 			bw.close();
 		} catch (IOException e) {
 			logger.error("Failed to write to WorldList.csv!", e);
@@ -80,7 +80,7 @@ public class SVFileIOHandler {
 		isDone = true;
 	}
 	*/
-	
+
 	public static void saveList() {
 		isDone = false;
 		try {
@@ -89,7 +89,7 @@ public class SVFileIOHandler {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(snitchList));
 			logger.info("Saving Snitch list.. " + SV.instance.snitchList.size() + " snitches to save.");
 			for (Snitch n : SV.instance.snitchList) {
-				bw.write(n.getWorldName() + "," + n.getWorldUUID() + "," + n.getX() + "," + n.getY() + "," + n.getZ() + "," + 
+				bw.write(n.getWorldName() + "," + n.getWorldUUID() + "," + n.getX() + "," + n.getY() + "," + n.getZ() + "," +
 							((n.getRawCullTime() != null) ? n.getRawCullTime().getTime() : " ") + "," +
 							n.getCtGroup() + "," + n.getName() + ",\r\n");
 			}
@@ -128,9 +128,9 @@ public class SVFileIOHandler {
 			if (!worldList.exists()) {
 				saveWorlds();
 			}
-			
+
 			BufferedReader br = new BufferedReader(new FileReader(worldList));
-			
+
 			String line = br.readLine();
 			while (line != null) {
 				String tokens[] = line.split(",");
@@ -146,7 +146,7 @@ public class SVFileIOHandler {
 					logger.info("Unknown world mapping: " + line);
 				}
 			}
-			
+
 			br.close();
 		} catch (IOException e) {
 			logger.error("Failed to write to WorldList.csv!", e);
@@ -156,7 +156,7 @@ public class SVFileIOHandler {
 		isDone = true;
 	}
 	*/
-	
+
 	public static void loadList() {
 		isDone = false;
 		try {
@@ -166,7 +166,7 @@ public class SVFileIOHandler {
 
 			BufferedReader br = null;
 
-			
+
 			br = new BufferedReader(new FileReader(snitchList));
 
 			String line = br.readLine();
@@ -263,7 +263,7 @@ public class SVFileIOHandler {
 					File snitchReport = new File(Minecraft.getMinecraft().mcDataDir.toString() + folderDir + folderReport
 							+ "/" + snitchName + ".csv");
 					snitchReport.createNewFile();
-	
+
 					BufferedWriter bw = new BufferedWriter(new FileWriter(snitchReport));
 					logger.info("Saving Snitch list.. " + SVChatHandler.tempList.size() + " snitches to save.");
 					for (Block b : SVChatHandler.tempList) {

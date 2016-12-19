@@ -18,7 +18,7 @@ import com.github.scuwr.snitchvisualizer.classobjects.Snitch;
 
 /**
  * Player Handler for Snitch Visualizer
- * 
+ *
  * @author Scuwr
  * @author ProgrammerDan
  */
@@ -30,7 +30,7 @@ public class SVPlayerHandler {
 	public static boolean updateSnitchName = false;
 
 	private static boolean playerIsInSnitchArea = false;
-	
+
 	private long lastExecute = 0l;
 	private static long delay = 100l;
 	private long skips = 0l;
@@ -86,7 +86,7 @@ public class SVPlayerHandler {
 	 *    world, x, z, y in that order. First the slice holding snitches in the same world is found,
 	 *    then the slice of that holding the X of interest, then Z. Finally the results are iterated
 	 *    over to find the closest.
-	 *    
+	 *
 	 * @param worldUUID
 	 *            world ID
 	 * @param x
@@ -103,7 +103,7 @@ public class SVPlayerHandler {
 	public static void checkSnitchArea(String worldUUID, int x, int y, int z, ArrayList<Snitch> snitchList, boolean removeSnitch) {
 		try {
 			searchChecks = 0l;
-			
+
 			int min = 0;
 			findLowerLimit(Search.WORLD_UUID, worldUUID, 0, snitchList.size() - 1, snitchList);
 			int max = snitchList.size()-1;
@@ -115,14 +115,14 @@ public class SVPlayerHandler {
 				if (max < min) return;
 				if (max - min <= 1) break;
 			}
-			
+
 			logger.debug("Performed " + searchChecks + " checks -- final bounds: " + min + ", " + max);
 			logger.debug("Total snitches: " + snitchList.size() + " -- searched " +
 						Math.round(((double)(searchChecks + max-min+1) / (double)snitchList.size()) * 10000.0d)/100.0d + "% of total");
-	
+
 			int index = -1;
 			double sqDistance = Double.MAX_VALUE;
-	
+
 			for (int i = min; i <= max; i++) {
 				Snitch n = snitchList.get(i);
 				if (n.contains(worldUUID, x, y, z)) {
@@ -134,7 +134,7 @@ public class SVPlayerHandler {
 					}
 				}
 			}
-	
+
 			if (index != -1) {
 				snitchIndex = index;
 				Snitch n = SV.instance.snitchList.get(index);
@@ -166,10 +166,10 @@ public class SVPlayerHandler {
 	}
 	/*
 	 * New strategy:
-	 * 
+	 *
 	 * Find lower x limit, then find upper x limit, then test for distance from
 	 * player to snitch
-	 * 
+	 *
 	 * maybe use a map?
 	 */
 
@@ -178,7 +178,7 @@ public class SVPlayerHandler {
 		Z,
 		WORLD_UUID;
 	}
-	
+
 	private static int findUpperLimit(Search s, Object obj, int min, int max, ArrayList<Snitch> snitchList) {
 		if (max - min <= 1) {
 			return max;
@@ -199,7 +199,7 @@ public class SVPlayerHandler {
 				(s.equals(Search.WORLD_UUID) && ((String) obj).compareTo(n.getWorldUUID()) < 0)) {
 			return findUpperLimit(s, obj, min, mid - 1, snitchList);
 		}
-		
+
 		int nmid = mid ++;
 		while (	nmid <= max &&
 				(s.equals(Search.X) && (Integer) obj == snitchList.get(nmid).getFieldMinX()) ||
@@ -234,7 +234,7 @@ public class SVPlayerHandler {
 				(s.equals(Search.WORLD_UUID) && ((String) obj).compareTo(n.getWorldUUID()) < 0)) {
 			return findLowerLimit(s, obj, min, mid - 1, snitchList);
 		}
-		
+
 		int nmid = mid --;
 		while (	nmid >= min &&
 				(s.equals(Search.X) && (Integer) obj == snitchList.get(nmid).getFieldMaxX()) ||

@@ -19,7 +19,7 @@ public class GuiSnitchList extends GuiListExtended {
 	private final GuiEditSnitches guiSnitches;
 	private final Minecraft mc;
 	private final GuiListExtended.IGuiListEntry[] iGuiList;
-	
+
 	private int worldWidth = 0;
 	private int entryWidth = 0;
 	private int coordWidth = 0;
@@ -33,21 +33,21 @@ public class GuiSnitchList extends GuiListExtended {
 	private final String zHeader = "Z";
 	private final String groupHeader = "Group";
 	private final String nameHeader = "Snitch Name";
-	
+
 	public GuiSnitchList(GuiEditSnitches guiSnitches, Minecraft mc) {
-		super(mc, 
+		super(mc,
 				guiSnitches.width,		// width
 				guiSnitches.height, 		// height
 				32, 						// top
 				guiSnitches.height - 32, 	// bottom
 				20);						// slot size
-		
+
 		this.guiSnitches = guiSnitches;
 		this.mc = mc;
-		
+
 		int listSize = SV.instance.snitchList.size(); // TODO: replace with method
 		this.iGuiList = new GuiListExtended.IGuiListEntry[listSize];
-		
+
 		int i = 0;
 
 		this.nameWidth = 1;
@@ -69,7 +69,7 @@ public class GuiSnitchList extends GuiListExtended {
 			if (l > this.nameWidth) {
 				this.nameWidth = l;
 			}
-			
+
 			l = mc.fontRendererObj.getStringWidth(snitch.getWorldName() + "  ");
 			if (l > this.worldWidth) {
 				this.worldWidth = l;
@@ -89,20 +89,20 @@ public class GuiSnitchList extends GuiListExtended {
 		if (this.ctGroupWidth > this.nameSpace) {
 			this.ctGroupWidth = this.nameSpace;
 		}
-		
+
 		this.setHasListHeader(true, (int) ( (float) GuiSnitchList.this.mc.fontRendererObj.FONT_HEIGHT * 1.5));
 	}
 
     protected void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_)
     {
         String root = ChatFormatting.UNDERLINE + "" + ChatFormatting.BOLD;
-        
+
 		int xPosition = p_148129_1_;
 		int yFinal = p_148129_2_ + GuiSnitchList.this.mc.fontRendererObj.FONT_HEIGHT - 1;
 
-		int sum = 0; 
-		
-		GuiSnitchList.this.mc.fontRendererObj.drawString(root + this.worldHeader, 
+		int sum = 0;
+
+		GuiSnitchList.this.mc.fontRendererObj.drawString(root + this.worldHeader,
 				xPosition + sum + (GuiSnitchList.this.worldWidth - mc.fontRendererObj.getStringWidth(root+this.worldHeader)) / 2,
 				yFinal, 16777215);
 		sum += GuiSnitchList.this.worldWidth;
@@ -110,11 +110,11 @@ public class GuiSnitchList extends GuiListExtended {
 				xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(root+this.xHeader)) / 2,
 				yFinal, 16777215);
 		sum += GuiSnitchList.this.coordWidth;
-		GuiSnitchList.this.mc.fontRendererObj.drawString(root + this.yHeader, 
-				xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(root+this.yHeader)) / 2, 
+		GuiSnitchList.this.mc.fontRendererObj.drawString(root + this.yHeader,
+				xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(root+this.yHeader)) / 2,
 				yFinal, 16777215);
 		sum += GuiSnitchList.this.coordWidth;
-		GuiSnitchList.this.mc.fontRendererObj.drawString(root + this.zHeader, 
+		GuiSnitchList.this.mc.fontRendererObj.drawString(root + this.zHeader,
 				xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(root+this.zHeader)) / 2,
 				yFinal, 16777215);
 		sum += GuiSnitchList.this.coordWidth;
@@ -126,7 +126,7 @@ public class GuiSnitchList extends GuiListExtended {
 				xPosition + sum + (GuiSnitchList.this.nameWidth - mc.fontRendererObj.getStringWidth(root+this.nameHeader)) / 2,
 				yFinal, 16777215);
     }
-    
+
 	protected int getSize() {
 		return this.iGuiList.length;
 	}
@@ -141,7 +141,7 @@ public class GuiSnitchList extends GuiListExtended {
 	protected int getScrollBarX() {
 		return this.width - 16;
 	}
-	
+
 	/**
 	 * Gets the width of the list
 	 */
@@ -168,7 +168,7 @@ public class GuiSnitchList extends GuiListExtended {
 
 		private ListEntry(Snitch p_i45029_2_) {
 			this.snitch = p_i45029_2_;
-			
+
 			this.xCoord = Integer.toString(snitch.getX());
 			this.yCoord = Integer.toString(snitch.getY());
 			this.zCoord = Integer.toString(snitch.getZ());
@@ -191,7 +191,7 @@ public class GuiSnitchList extends GuiListExtended {
 				this.ctGroup = snitch.getCtGroup();
 			}*/
 			this.ctGroup = snitch.getCtGroup();
-			
+
 			this.worldWidth = mc.fontRendererObj.getStringWidth(snitch.getWorldName());
 			this.world = snitch.getWorldName();
 		}
@@ -201,9 +201,9 @@ public class GuiSnitchList extends GuiListExtended {
 			//xPosition = xPosition - 1;
 			int yFinal = yPosition + (p_148279_5_ + GuiSnitchList.this.mc.fontRendererObj.FONT_HEIGHT) / 2;
 
-			int sum = 0; 
-			
-			GuiSnitchList.this.mc.fontRendererObj.drawString(this.world, 
+			int sum = 0;
+
+			GuiSnitchList.this.mc.fontRendererObj.drawString(this.world,
 					xPosition + sum + (GuiSnitchList.this.worldWidth - this.worldWidth) / 2,
 					yFinal, 16777215);
 			sum += GuiSnitchList.this.worldWidth;
@@ -211,11 +211,11 @@ public class GuiSnitchList extends GuiListExtended {
 					xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(this.xCoord)) / 2,
 					yFinal, 16777215);
 			sum += GuiSnitchList.this.coordWidth;
-			GuiSnitchList.this.mc.fontRendererObj.drawString(this.yCoord, 
-					xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(this.yCoord)) / 2, 
+			GuiSnitchList.this.mc.fontRendererObj.drawString(this.yCoord,
+					xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(this.yCoord)) / 2,
 					yFinal, 16777215);
 			sum += GuiSnitchList.this.coordWidth;
-			GuiSnitchList.this.mc.fontRendererObj.drawString(this.zCoord, 
+			GuiSnitchList.this.mc.fontRendererObj.drawString(this.zCoord,
 					xPosition + sum + (GuiSnitchList.this.coordWidth - mc.fontRendererObj.getStringWidth(this.zCoord)) / 2,
 					yFinal, 16777215);
 			sum += GuiSnitchList.this.coordWidth;
@@ -238,9 +238,9 @@ public class GuiSnitchList extends GuiListExtended {
 		 * Returns true if the mouse has been pressed on this control.
 		 */
 		public boolean mousePressed(int index, int xPos, int yPos, int mouseEvent, int relX, int relY) {
-			
+
 			//LogManager.getLogger("SnitchVisualizer").info("MousePress on SnitchListItem Detected!");
-			
+
 			if (this.btnRemove.enabled && this.btnRemove.mousePressed(GuiSnitchList.this.mc, xPos, yPos)) {
 				doRemoval();
 				return true;
@@ -248,7 +248,7 @@ public class GuiSnitchList extends GuiListExtended {
 
 			return false;
 		}
-		
+
 		private void doRemoval() {
 			if (guiSnitches.removeSnitches.add(this.snitch)) {
 				this.btnRemove.displayString = "Removed!";
@@ -260,7 +260,7 @@ public class GuiSnitchList extends GuiListExtended {
 		 * Fired when the mouse button is released. Arguments: index, x, y,
 		 * mouseEvent, relativeX, relativeY
 		 */
-		
+
 		public void mouseReleased(int index, int xPos, int yPos, int mouseEvent, int relX, int relY) {
 			this.btnRemove.mouseReleased(xPos, yPos);
 		}
@@ -275,7 +275,7 @@ public class GuiSnitchList extends GuiListExtended {
 
 		}
 	}
-	
+
 	@Override
 	protected void elementClicked(int slotIndex, boolean isDoubleClick, int mouseX, int mouseY) {
 		if (isDoubleClick || slotIndex < 0 || slotIndex >= iGuiList.length) return;

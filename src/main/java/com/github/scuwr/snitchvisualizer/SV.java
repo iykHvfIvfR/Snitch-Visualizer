@@ -26,7 +26,7 @@ import wafflestomper.wafflecore.WorldInfo;
 
 /**
  * Main class file for Snitch Visualizer
- * 
+ *
  * @author Scuwr
  *
  */
@@ -45,7 +45,7 @@ public class SV {
 	 */
 	public ArrayList<Snitch> snitchList;
 	public ArrayList<Block> blockList;
-	//public Map<String, String> worldList; 
+	//public Map<String, String> worldList;
 	//public Map<String, ArrayList<String>> inverseWorldList;
 	public static SVSettings settings;
 	public static Logger logger = LogManager.getLogger("SnitchVisualizer");

@@ -17,14 +17,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Defines the on-screen gui for editing the snitch list
- * 
+ *
  * @author Scuwr
  */
 @SideOnly(Side.CLIENT)
 public class GuiEditSnitches extends GuiScreen {
 
 	public GuiScreen parentScreen;
-	
+
 	public ArrayList<Snitch> removeSnitches = new ArrayList<Snitch>();
 
 	private GuiSnitchList guiSnitchList;
@@ -57,7 +57,7 @@ public class GuiEditSnitches extends GuiScreen {
 				.format("gui.done")));
 		this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height - 4 + b0, 98, 18, I18n
 				.format("svoptions.resetSnitchList")));
-		
+
 		this.guiSnitchList.registerScrollButtons(4, 5);
 	}
 
@@ -78,7 +78,7 @@ public class GuiEditSnitches extends GuiScreen {
 			this.guiSnitchList = new GuiSnitchList(this, this.mc);
 		}
 	}
-	
+
 	private void removeSnitches(){
 		for (Snitch s : removeSnitches){
 			SV.instance.snitchList.remove(s);
@@ -87,7 +87,7 @@ public class GuiEditSnitches extends GuiScreen {
 
 	protected void mouseClicked(int mouseX, int mouseY, int mouseEvent) {
 		this.guiSnitchList.mouseClicked(mouseX, mouseY, mouseEvent);
-		
+
 		//LogManager.getLogger("SnitchVisualizer").info("MousePress on SnitchGUI Detected!");
 
 		//if (p_73864_3_ != 0) {

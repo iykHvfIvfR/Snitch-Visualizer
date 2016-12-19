@@ -7,7 +7,7 @@ import net.minecraft.client.resources.I18n;
 
 /**
  * The configuration settings for this SnitchVisualizer
- * 
+ *
  * @author Scuwr
  */
 public class SVSettings {
@@ -164,9 +164,9 @@ public class SVSettings {
 	}
 
 	public enum Options {
-		LIST_UPDATE("svoptions.listUpdate", true, false), 
-		UPDATE_DETECTION("svoptions.updateDetection", true, false), 
-		RENDER_DISTANCE("svoptions.renderDistance", true, false, 1.0F, 6.0F, 1.0F), 
+		LIST_UPDATE("svoptions.listUpdate", true, false),
+		UPDATE_DETECTION("svoptions.updateDetection", true, false),
+		RENDER_DISTANCE("svoptions.renderDistance", true, false, 1.0F, 6.0F, 1.0F),
 		RENDER_ENABLED("svoptions.renderEnabled", true, false),
 		SETTINGS_KEYBINDING("svoptions.keyBinding", true, false);
 
