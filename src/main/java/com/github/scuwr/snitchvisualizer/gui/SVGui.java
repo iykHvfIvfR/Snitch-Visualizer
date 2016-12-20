@@ -52,13 +52,12 @@ public class SVGui extends GuiScreen {
 		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 24 + b0, I18n
 				.format("svoptions.listUpdate")));
-		if(SVChatHandler.snitchReport){
+		if(SVChatHandler.snitchReport) {
 			this.buttonList.add(new GuiButton(6, this.width / 2 - 100, this.height / 4 + 48 + b0, I18n
-					.format("svoptions.snitchReportCancel")));
-		}
-		else{
-		this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + b0, I18n
-				.format("svoptions.snitchReport")));
+				.format("svoptions.snitchReportCancel")));
+		} else {
+			this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + b0, I18n
+					.format("svoptions.snitchReport")));
 		}
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72 + b0, 98, 18, SV.settings
 				.getKeyBinding(SVSettings.Options.UPDATE_DETECTION)));

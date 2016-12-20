@@ -78,8 +78,8 @@ public class GuiEditSnitches extends GuiScreen {
 		}
 	}
 
-	private void removeSnitches(){
-		for (Snitch s : removeSnitches){
+	private void removeSnitches() {
+		for (Snitch s : removeSnitches) {
 			SV.instance.snitchList.remove(s);
 		}
 	}

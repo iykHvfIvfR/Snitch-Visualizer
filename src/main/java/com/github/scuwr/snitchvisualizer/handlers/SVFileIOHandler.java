@@ -68,8 +68,8 @@ public class SVFileIOHandler {
 			logger.info("Saving Snitch list.. " + SV.instance.snitchList.size() + " snitches to save.");
 			for (Snitch n : SV.instance.snitchList) {
 				bw.write(n.getWorldName() + "," + n.getWorldUUID() + "," + n.getX() + "," + n.getY() + "," + n.getZ() + "," +
-							((n.getRawCullTime() != null) ? n.getRawCullTime().getTime() : " ") + "," +
-							n.getCtGroup() + "," + n.getName() + ",\r\n");
+						((n.getRawCullTime() != null) ? n.getRawCullTime().getTime() : " ") + "," +
+						n.getCtGroup() + "," + n.getName() + ",\r\n");
 			}
 			bw.close();
 		} catch (IOException e) {
@@ -107,7 +107,6 @@ public class SVFileIOHandler {
 			}
 
 			BufferedReader br = null;
-
 
 			br = new BufferedReader(new FileReader(snitchList));
 

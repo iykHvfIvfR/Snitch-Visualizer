@@ -12,6 +12,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
  *
  */
 public class Snitch implements Comparable<Snitch> {
+
 	private String worldName;
 	private String worldUUID;
 	private int x;
@@ -107,7 +108,6 @@ public class Snitch implements Comparable<Snitch> {
 	public Date getRawCullTime() {
 		return this.cullTime;
 	}
-
 
 	/**
 	 * Defines how to compare one Snitch object against another

@@ -55,7 +55,7 @@ public class SVPlayerHandler {
 					onPlayerMove(player);
 					skips = 0l;
 				}
-			};
+			}
 		} catch (Exception e) {
 			logger.error("Unexpected error during client tick event handler for player movement.", e);
 		}
@@ -111,7 +111,7 @@ public class SVPlayerHandler {
 
 			logger.debug("Performed " + searchChecks + " checks -- final bounds: " + min + ", " + max);
 			logger.debug("Total snitches: " + snitchList.size() + " -- searched " +
-						Math.round(((double)(searchChecks + max-min+1) / (double)snitchList.size()) * 10000.0d)/100.0d + "% of total");
+					Math.round(((double)(searchChecks + max-min+1) / (double)snitchList.size()) * 10000.0d)/100.0d + "% of total");
 
 			int index = -1;
 			double sqDistance = Double.MAX_VALUE;
@@ -157,6 +157,7 @@ public class SVPlayerHandler {
 			logger.error("Failure while checking snitch area!", e);
 		}
 	}
+
 	/*
 	 * New strategy:
 	 *
@@ -165,7 +166,6 @@ public class SVPlayerHandler {
 	 *
 	 * maybe use a map?
 	 */
-
 	private enum Search {
 		X,
 		Z,
@@ -194,7 +194,7 @@ public class SVPlayerHandler {
 		}
 
 		int nmid = mid ++;
-		while (	nmid <= max &&
+		while (nmid <= max &&
 				(s.equals(Search.X) && (Integer) obj == snitchList.get(nmid).getFieldMinX()) ||
 				(s.equals(Search.Z) && (Integer) obj == snitchList.get(nmid).getFieldMinZ()) ||
 				(s.equals(Search.WORLD_UUID) && ((String) obj).compareTo(snitchList.get(nmid).getWorldUUID()) == 0)) {
@@ -229,7 +229,7 @@ public class SVPlayerHandler {
 		}
 
 		int nmid = mid --;
-		while (	nmid >= min &&
+		while (nmid >= min &&
 				(s.equals(Search.X) && (Integer) obj == snitchList.get(nmid).getFieldMaxX()) ||
 				(s.equals(Search.Z) && (Integer) obj == snitchList.get(nmid).getFieldMaxZ()) ||
 				(s.equals(Search.WORLD_UUID) && ((String) obj).compareTo(snitchList.get(nmid).getWorldUUID()) == 0)) {

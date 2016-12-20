@@ -167,7 +167,6 @@ public class SVChatHandler {
 				logger.error("Couldn't notify player of error", f);
 			}
 		}
-
 	}
 
 	public void parseSnitch(String msg, Matcher match) {
@@ -198,7 +197,6 @@ public class SVChatHandler {
 				SV.instance.snitchList.add(n);
 				Collections.sort(SV.instance.snitchList);
 				SVFileIOHandler.saveList();
-
 			} else {
 				SV.instance.snitchList.get(index).setCtGroup(ctGroup);
 				SV.instance.snitchList.get(index).setCullTime(cullTime);

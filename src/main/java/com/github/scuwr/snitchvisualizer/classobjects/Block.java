@@ -10,6 +10,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
  *
  */
 public class Block {
+
 	private int x;
 	private int y;
 	private int z;

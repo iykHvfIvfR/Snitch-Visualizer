@@ -16,6 +16,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 
 @SideOnly(Side.CLIENT)
 public class GuiSnitchList extends GuiListExtended {
+
 	private final GuiEditSnitches guiSnitches;
 	private final Minecraft mc;
 	private final GuiListExtended.IGuiListEntry[] iGuiList;
@@ -35,11 +36,11 @@ public class GuiSnitchList extends GuiListExtended {
 
 	public GuiSnitchList(GuiEditSnitches guiSnitches, Minecraft mc) {
 		super(mc,
-				guiSnitches.width,		// width
-				guiSnitches.height, 		// height
-				32, 						// top
-				guiSnitches.height - 32, 	// bottom
-				20);						// slot size
+				guiSnitches.width,       // width
+				guiSnitches.height,      // height
+				32,                      // top
+				guiSnitches.height - 32, // bottom
+				20);                     // slot size
 
 		this.guiSnitches = guiSnitches;
 		this.mc = mc;
@@ -92,9 +93,8 @@ public class GuiSnitchList extends GuiListExtended {
 		this.setHasListHeader(true, (int) ( (float) GuiSnitchList.this.mc.fontRendererObj.FONT_HEIGHT * 1.5));
 	}
 
-    protected void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_)
-    {
-        String root = ChatFormatting.UNDERLINE + "" + ChatFormatting.BOLD;
+	protected void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_) {
+		String root = ChatFormatting.UNDERLINE + "" + ChatFormatting.BOLD;
 
 		int xPosition = p_148129_1_;
 		int yFinal = p_148129_2_ + GuiSnitchList.this.mc.fontRendererObj.FONT_HEIGHT - 1;
@@ -124,7 +124,7 @@ public class GuiSnitchList extends GuiListExtended {
 		GuiSnitchList.this.mc.fontRendererObj.drawString(root + this.nameHeader,
 				xPosition + sum + (GuiSnitchList.this.nameWidth - mc.fontRendererObj.getStringWidth(root+this.nameHeader)) / 2,
 				yFinal, 16777215);
-    }
+	}
 
 	protected int getSize() {
 		return this.iGuiList.length;
@@ -241,7 +241,6 @@ public class GuiSnitchList extends GuiListExtended {
 		 * Fired when the mouse button is released. Arguments: index, x, y,
 		 * mouseEvent, relativeX, relativeY
 		 */
-
 		public void mouseReleased(int index, int xPos, int yPos, int mouseEvent, int relX, int relY) {
 			this.btnRemove.mouseReleased(xPos, yPos);
 		}
@@ -253,7 +252,6 @@ public class GuiSnitchList extends GuiListExtended {
 		@Override
 		public void setSelected(int p_178011_1_, int p_178011_2_, int p_178011_3_) {
 			// TODO Auto-generated method stub
-
 		}
 	}
 
