@@ -70,7 +70,6 @@ public class GuiEditSnitches extends GuiScreen {
 			removeSnitches();
 			SVFileIOHandler.saveSettings();
 			SVFileIOHandler.saveList();
-			//SVFileIOHandler.saveWorlds();
 			break;
 		case 5:
 			SV.instance.blockList = new ArrayList<Block>();
@@ -87,15 +86,10 @@ public class GuiEditSnitches extends GuiScreen {
 
 	protected void mouseClicked(int mouseX, int mouseY, int mouseEvent) {
 		this.guiSnitchList.mouseClicked(mouseX, mouseY, mouseEvent);
-
-		//LogManager.getLogger("SnitchVisualizer").info("MousePress on SnitchGUI Detected!");
-
-		//if (p_73864_3_ != 0) {
-			try {
-				super.mouseClicked(mouseX, mouseY, mouseEvent);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		//}
+		try {
+			super.mouseClicked(mouseX, mouseY, mouseEvent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

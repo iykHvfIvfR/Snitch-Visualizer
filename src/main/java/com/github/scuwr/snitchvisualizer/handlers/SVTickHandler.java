@@ -37,9 +37,6 @@ public class SVTickHandler {
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		try {
-			/*if (SV.instance.playerHandler != null)
-				SV.instance.playerHandler.onPlayerEvent(event);*/
-
 			if (((new Date()).getTime() - (waitTime * 1000)) > start.getTime()) {
 				if (SVChatHandler.updateSnitchList) {
 					logger.warn(">>>>>>>>>  Sending jalist " + String.valueOf(SVChatHandler.jalistIndex));

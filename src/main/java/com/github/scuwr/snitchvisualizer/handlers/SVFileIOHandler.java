@@ -59,28 +59,6 @@ public class SVFileIOHandler {
 		return true;
 	}
 
-	/*
-	public static void saveWorlds() {
-		isDone = false;
-		try{
-			prepareFile(svDir, worldList);
-
-			BufferedWriter bw = new BufferedWriter(new FileWriter(worldList));
-
-			for (Map.Entry<String,String> entry : SV.instance.worldList.entrySet()) {
-				bw.write(entry.getKey() + "," + entry.getValue() + ",\r\n");
-			}
-
-			bw.close();
-		} catch (IOException e) {
-			logger.error("Failed to write to WorldList.csv!", e);
-		} catch (Exception f) {
-			logger.error("General failure while writing WorldList.csv", f);
-		}
-		isDone = true;
-	}
-	*/
-
 	public static void saveList() {
 		isDone = false;
 		try {
@@ -120,42 +98,6 @@ public class SVFileIOHandler {
 		}
 		isDone = true;
 	}
-
-	/*
-	public static void loadWorlds() {
-		isDone = false;
-		try{
-			if (!worldList.exists()) {
-				saveWorlds();
-			}
-
-			BufferedReader br = new BufferedReader(new FileReader(worldList));
-
-			String line = br.readLine();
-			while (line != null) {
-				String tokens[] = line.split(",");
-				if (tokens.length > 1) {
-					SV.instance.worldList.put(tokens[0], tokens[1]);
-					ArrayList<String> worldsIds = SV.instance.inverseWorldList.get(tokens[1]);
-					if (worldsIds == null) {
-						worldsIds = new ArrayList<String>();
-						SV.instance.inverseWorldList.put(tokens[1], worldsIds);
-					}
-					worldsIds.add(tokens[0]);
-				} else {
-					logger.info("Unknown world mapping: " + line);
-				}
-			}
-
-			br.close();
-		} catch (IOException e) {
-			logger.error("Failed to write to WorldList.csv!", e);
-		} catch (Exception f) {
-			logger.error("General failure while writing WorldList.csv", f);
-		}
-		isDone = true;
-	}
-	*/
 
 	public static void loadList() {
 		isDone = false;

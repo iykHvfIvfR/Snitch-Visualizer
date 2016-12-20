@@ -26,7 +26,6 @@ public class GuiSnitchList extends GuiListExtended {
 	private int ctGroupWidth = 0;
 	private int nameWidth = 0;
 	private int nameSpace = 0;
-	//private static final String __OBFID = "CL_00000732";
 	private final String worldHeader = "Shard";
 	private final String xHeader = "X";
 	private final String yHeader = "Y";
@@ -164,8 +163,6 @@ public class GuiSnitchList extends GuiListExtended {
 		private final int nameWidth;
 		private final int groupWidth;
 
-		//private static final String __OBFID = "CL_00000735";
-
 		private ListEntry(Snitch p_i45029_2_) {
 			this.snitch = p_i45029_2_;
 
@@ -175,21 +172,9 @@ public class GuiSnitchList extends GuiListExtended {
 			this.btnRemove = new GuiButton(10, GuiSnitchList.this.width - 60, 0, 50, 18, I18n.format("Remove", new Object[0]));
 
 			this.nameWidth = mc.fontRendererObj.getStringWidth(snitch.getName());
-			/*if (this.nameWidth > GuiSnitchList.this.nameSpace) {
-				double l = (double) this.nameWidth / (double) GuiSnitchList.this.nameSpace;
-				this.snitchName = this.snitch.getName().substring(0, (int) (snitch.getName().length() / l) - 2) + "~";
-			} else {
-				this.snitchName = snitch.getName();
-			}*/
 			this.snitchName = snitch.getName();
 
 			this.groupWidth = mc.fontRendererObj.getStringWidth(snitch.getCtGroup());
-			/*if (this.groupWidth > GuiSnitchList.this.nameSpace) {
-				double l = (double) this.groupWidth / (double) GuiSnitchList.this.nameSpace;
-				this.ctGroup = this.snitch.getCtGroup().substring(0, (int) (snitch.getCtGroup().length() / l) - 2) + "~";
-			} else {
-				this.ctGroup = snitch.getCtGroup();
-			}*/
 			this.ctGroup = snitch.getCtGroup();
 
 			this.worldWidth = mc.fontRendererObj.getStringWidth(snitch.getWorldName());
@@ -198,7 +183,6 @@ public class GuiSnitchList extends GuiListExtended {
 
 		public void drawEntry(int p_148279_1_, int xPosition, int yPosition, int p_148279_4_, int p_148279_5_,
 				int p_148279_7_, int p_148279_8_, boolean p_148279_9_) {
-			//xPosition = xPosition - 1;
 			int yFinal = yPosition + (p_148279_5_ + GuiSnitchList.this.mc.fontRendererObj.FONT_HEIGHT) / 2;
 
 			int sum = 0;
@@ -238,9 +222,6 @@ public class GuiSnitchList extends GuiListExtended {
 		 * Returns true if the mouse has been pressed on this control.
 		 */
 		public boolean mousePressed(int index, int xPos, int yPos, int mouseEvent, int relX, int relY) {
-
-			//LogManager.getLogger("SnitchVisualizer").info("MousePress on SnitchListItem Detected!");
-
 			if (this.btnRemove.enabled && this.btnRemove.mousePressed(GuiSnitchList.this.mc, xPos, yPos)) {
 				doRemoval();
 				return true;

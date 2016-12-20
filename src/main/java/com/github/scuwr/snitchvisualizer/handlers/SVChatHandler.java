@@ -60,24 +60,20 @@ public class SVChatHandler {
 			} else if (msg.contains("Snitch Log for") || msg.contains("Page 1 is empty for snitch")) {
 				// export jainfo to csv
 				try {
-					if (true){//SVPlayerHandler.snitchIndex > -1) { // fix issue
-						//Snitch n = SV.instance.snitchList.get(SVPlayerHandler.snitchIndex);
-						String name = parseSnitchName(msg);
-						//n.setName(name);
-						if (SVPlayerHandler.updateSnitchName) {
-							SVPlayerHandler.updateSnitchName = false; // done!
-						}
-						SVFileIOHandler.saveList();
+					String name = parseSnitchName(msg);
+					if (SVPlayerHandler.updateSnitchName) {
+						SVPlayerHandler.updateSnitchName = false; // done!
+					}
+					SVFileIOHandler.saveList();
 
-						if (snitchReport) {
-							if (snitchReportName.equals("")) {
-								snitchReportName = name;
-							}
-							if (!snitchReportName.equals(name)) {
-								snitchReport = false;
-								SVFileIOHandler.saveSnitchReport(snitchReportName);
-								snitchReportName = "";
-							}
+					if (snitchReport) {
+						if (snitchReportName.equals("")) {
+							snitchReportName = name;
+						}
+						if (!snitchReportName.equals(name)) {
+							snitchReport = false;
+							SVFileIOHandler.saveSnitchReport(snitchReportName);
+							snitchReportName = "";
 						}
 					}
 				} catch (Exception e) {
@@ -268,7 +264,6 @@ public class SVChatHandler {
 	public void parseEntry(String msg) {
 		if (msg != null) {
 			try {
-				//msg = msg.substring(msg.indexOf(">") + 1);
 				logger.info("Parsing string " + msg);
 				String[] tokens = msg.split(" +");
 				if (tokens[2].equals("Entry")) {

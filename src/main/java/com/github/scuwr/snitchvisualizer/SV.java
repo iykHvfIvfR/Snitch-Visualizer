@@ -45,8 +45,6 @@ public class SV {
 	 */
 	public ArrayList<Snitch> snitchList;
 	public ArrayList<Block> blockList;
-	//public Map<String, String> worldList;
-	//public Map<String, ArrayList<String>> inverseWorldList;
 	public static SVSettings settings;
 	public static Logger logger = LogManager.getLogger("SnitchVisualizer");
 	public SVPlayerHandler playerHandler;
@@ -58,12 +56,9 @@ public class SV {
 		instance = this;
 		this.snitchList = new ArrayList<Snitch>();
 		this.blockList = new ArrayList<Block>();
-		//this.worldList = new HashMap<String,String>();
-		//this.inverseWorldList = new HashMap<String,ArrayList<String>>();
 		SV.settings = new SVSettings(this);
 		SVFileIOHandler.loadSettings();
 		SVFileIOHandler.loadList();
-		//SVFileIOHandler.loadWorlds();
 		if (!(this.snitchList instanceof ArrayList)) {
 			logger.info("Snitch List failed to instantiate!");
 		}

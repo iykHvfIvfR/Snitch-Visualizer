@@ -65,13 +65,6 @@ public class SVPlayerHandler {
 		try {
 			String worldUUID = WaffleCore.INSTANCE.worldInfo.getWorldName();
 			logger.debug("(" + skips + " skipped events) Current world: " + worldUUID);
-			/*
-			String worldX = SV.instance.worldList.get(world);
-			if (worldX == null) {
-				worldX = world;
-				logger.info("Unable to map " + world + " to a snitch-world");
-			}
-			*/
 			checkSnitchArea(worldUUID, (int) Math.floor(player.posX), (int) Math.floor(player.posY) - 1,
 					(int) Math.floor(player.posZ), SV.instance.snitchList, false);
 		} catch (Exception e) {
