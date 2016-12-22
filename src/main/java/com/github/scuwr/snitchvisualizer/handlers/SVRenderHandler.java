@@ -59,7 +59,7 @@ public class SVRenderHandler {
 
 						GL11.glPushMatrix();
 						double px = -(renderPosX - n.getX());
-						double py = -(renderPosY - n.getY());
+						double py = -(renderPosY - n.getY() - 1);
 						double pz = -(renderPosZ - n.getZ());
 						AxisAlignedBB bb = new AxisAlignedBB(px - 10.99, py - 11.99, pz - 10.99, px + 11.99,
 								py + 10.99, pz + 11.99);
