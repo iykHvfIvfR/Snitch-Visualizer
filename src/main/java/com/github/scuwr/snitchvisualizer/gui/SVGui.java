@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.github.scuwr.snitchvisualizer.SV;
 import com.github.scuwr.snitchvisualizer.SVSettings;
 import com.github.scuwr.snitchvisualizer.classobjects.Block;
+import com.github.scuwr.snitchvisualizer.classobjects.Snitch;
 import com.github.scuwr.snitchvisualizer.handlers.SVChatHandler;
 import com.github.scuwr.snitchvisualizer.handlers.SVFileIOHandler;
 
@@ -74,6 +75,7 @@ public class SVGui extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 0:
+			SV.instance.snitchList = new ArrayList<Snitch>();
 			SVChatHandler.updateSnitchList();
 			this.mc.displayGuiScreen((GuiScreen) null);
 			this.mc.setIngameFocus();

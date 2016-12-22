@@ -157,6 +157,7 @@ public class SVChatHandler {
 				SVFileIOHandler.saveSnitchReport(snitchReportName);
 				snitchReportName = "";
 			}
+			SVFileIOHandler.saveList();
 		} else if (msg.contains("TPS from last 1m, 5m, 15m:")) {
 			ParseTPS(msg);
 		}
@@ -258,11 +259,9 @@ public class SVChatHandler {
 			if (index < 0 || 0 != n.compareTo(SV.instance.snitchList.get(index))) {
 				SV.instance.snitchList.add(n);
 				Collections.sort(SV.instance.snitchList);
-				SVFileIOHandler.saveList();
 			} else {
 				SV.instance.snitchList.get(index).setCtGroup(ctGroup);
 				SV.instance.snitchList.get(index).setCullTime(cullTime);
-				SVFileIOHandler.saveList();
 			}
 		} catch (NumberFormatException e) {
 			logger.error("Failed to parse snitch from chat!");
